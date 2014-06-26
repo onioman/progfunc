@@ -62,6 +62,20 @@ class TweetSetSuite extends FunSuite {
     }
   }
 
+  test("mostRetweeted empty") {
+    new TestSets {
+      intercept[NoSuchElementException] {
+        set1.mostRetweeted
+      }
+    }
+  }
+
+  test("mostRetweeted 1") {
+    new TestSets {
+      assert(set2.mostRetweeted.user == "a")
+    }
+  }
+
   test("descending: set5") {
     new TestSets {
       val trends = set5.descendingByRetweet
