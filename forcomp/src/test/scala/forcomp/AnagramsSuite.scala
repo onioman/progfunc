@@ -10,6 +10,10 @@ import Anagrams._
 @RunWith(classOf[JUnitRunner])
 class AnagramsSuite extends FunSuite {
 
+  test("to lower list") {
+    assert(str2lowerList("PeRro") === List('p', 'e', 'r', 'r', 'o'))
+  }
+
   test("wordOccurrences: abcd") {
     assert(wordOccurrences("abcd") === List(('a', 1), ('b', 1), ('c', 1), ('d', 1)))
   }
@@ -18,19 +22,13 @@ class AnagramsSuite extends FunSuite {
     assert(wordOccurrences("Robert") === List(('b', 1), ('e', 1), ('o', 1), ('r', 2), ('t', 1)))
   }
 
-
-
   test("sentenceOccurrences: abcd e") {
     assert(sentenceOccurrences(List("abcd", "e")) === List(('a', 1), ('b', 1), ('c', 1), ('d', 1), ('e', 1)))
   }
 
-
-
   test("dictionaryByOccurrences.get: eat") {
     assert(dictionaryByOccurrences.get(List(('a', 1), ('e', 1), ('t', 1))).map(_.toSet) === Some(Set("ate", "eat", "tea")))
   }
-
-
 
   test("word anagrams: married") {
     assert(wordAnagrams("married").toSet === Set("married", "admirer"))
@@ -39,8 +37,6 @@ class AnagramsSuite extends FunSuite {
   test("word anagrams: player") {
     assert(wordAnagrams("player").toSet === Set("parley", "pearly", "player", "replay"))
   }
-
-
 
   test("subtract: lard - r") {
     val lard = List(('a', 1), ('d', 1), ('l', 1), ('r', 1))
@@ -53,6 +49,16 @@ class AnagramsSuite extends FunSuite {
 
   test("combinations: []") {
     assert(combinations(Nil) === List(Nil))
+  }
+
+  test("combinations: aa") {
+    val aa = List(('a', 2))
+    val aacomb = List(
+      List(),
+      List(('a', 1)),
+      List(('a', 2))
+    )
+    assert(combinations(aa).toSet === aacomb.toSet)
   }
 
   test("combinations: abba") {
@@ -71,7 +77,52 @@ class AnagramsSuite extends FunSuite {
     assert(combinations(abba).toSet === abbacomb.toSet)
   }
 
+  test("combinations: abbacc") {
+    val abbacc = List(('a', 2), ('b', 2), ('c', 2))
+    val abbacccomb = List(
+      List(),
+      List(('a', 1)),
+      List(('a', 2)),
+      List(('b', 1)),
+      List(('b', 2)),
+      List(('c', 1)),
+      List(('c', 2)),
 
+      List(('a', 1), ('b', 1)),
+      List(('a', 2), ('b', 1)),
+      List(('a', 1), ('b', 2)),
+      List(('a', 2), ('b', 2)),
+
+      List(('a', 1), ('c', 1)),
+      List(('a', 2), ('c', 1)),
+      List(('a', 1), ('c', 2)),
+      List(('a', 2), ('c', 2)),
+
+      List(('b', 1), ('c', 1)),
+      List(('b', 2), ('c', 1)),
+      List(('b', 1), ('c', 2)),
+      List(('b', 2), ('c', 2)),
+
+      List(('a', 1), ('b', 1), ('c', 1)),
+      List(('a', 1), ('b', 1), ('c', 2)),
+      List(('a', 1), ('b', 2), ('c', 1)),
+      List(('a', 1), ('b', 2), ('c', 2)),
+      List(('a', 2), ('b', 1), ('c', 1)),
+      List(('a', 2), ('b', 1), ('c', 2)),
+      List(('a', 2), ('b', 2), ('c', 1)),
+      List(('a', 2), ('b', 2), ('c', 2))
+
+    )
+    assert(combinations(abbacc).toSet.toList.length === abbacccomb.length)
+    assert(combinations(abbacc).toSet === abbacccomb.toSet)
+  }
+
+
+  test("sentence anagrams: hi") {
+    val sentence = List("how", "are", "you")
+    val anagrams = sentenceAnagrams(sentence)
+    println(anagrams)
+  }
 
   test("sentence anagrams: []") {
     val sentence = List()
